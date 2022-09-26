@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # functionalProgrammingInTS
 
 Markdown-to-Presentation
@@ -9,3 +13,5 @@ Markdown-to-Presentation
 - Dispatcher: Manages Data Flow
 - Stores: Handle State & Logic
 - Views: Render Data via React
+
+---
