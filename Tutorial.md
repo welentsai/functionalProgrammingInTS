@@ -17,8 +17,8 @@ equals :: Setoid a => a ~> a -> Boolean
 |  f   | g  | composition | desc |
 |  ----  | ----  | ----  | ----  |
 | pure  | pure | compose(f,g) | 兩個pure function 的 composition |
-| effects  | pure(unary) | functor | f.map(g) |
-| effects  | pure(n-ary) | apply |  |
+| effects  | pure(unary) | functor | f.map(g) 把一個effect跟只有一個input 的 pure function 連起來 |
+| effects  | pure(n-ary) | apply | 把多個effects 與 一個有多個inputs的 pure function 連在一起 |
 
 ---
 
