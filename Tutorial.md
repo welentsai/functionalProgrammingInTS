@@ -85,3 +85,70 @@ const lift3 = g => f1 => f2 => f3 => f3.ap(f2.ap(f1.map(g)));
 ```
 - f1, f2, f3 都是一個container, 然後apply 給 g function, 結果也會封裝在container 中
 - f1, f2, f3 可以是平行的 Task, 都做完後, g function 再啓動
+
+---
+# Applicative
+
+- Applicative types are Apply types with one extra function, which we defien as of
+
+```
+of :: Applicative f => a -> f a
+```
+
+> with of, we can take a value and lift it into the given Applicative
+
+Q. So, why is this of thing useful ?
+A. the most exciting is that we can write functions generic to any applicative. Let's write a function that takes a list of applicative-wrapped values, and returns an applicative-wrapped list of values
+
+```
+// append :: a -> [a] -> [a]
+const append = y => xs => xs.concat([y])
+
+// There's that sneaky lift2 again!
+// lift2 :: Applicative f
+//       => (a -> b -> c, f a, f b)
+//       -> f c
+const lift2 = (f, a, b) => b.ap(a.map(f))
+
+// insideOut :: Applicative f
+//           => [f a] -> f [a]
+const insideOut = (T, xs) => xs.reduce(
+  (acc, x) => lift2(append, x, acc),
+  T.of([])) // To start us off!
+
+// For example...
+
+// Just [2, 10, 3]
+insideOut(Maybe, [ Just(2)
+                 , Just(10)
+                 , Just(3) ])
+
+// Nothing
+insideOut(Maybe, [ Just(2)
+                 , Nothing
+                 , Just(3) ])
+```
+
+---
+
+# Applicative (cont.)
+
+- this insideOut can be generalised further to become a super-helpful function called sequenceA that works on a lot more than just lists!
+
+---
+
+# Traversable 
+
+```
+traverse :: Applicative f, Traversable t
+         => t a -> (TypeRep f, a -> f b)
+         -> f (t b)
+```
+
+> t a can be read as a traversable structure with an inner a type
+> a -> f b , where f is some applicative
+> land on f ( t b ) , not t ( f b) , the f and t come out the other way around
+
+
+
+
