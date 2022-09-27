@@ -24,7 +24,7 @@ const myTask = async (): Promise<number> => {
     return 10;
 }
 
-const add = (a: number) => (b: number) => a + b;
+const add = (a: number) => (b: number) => (c: number) => a + b + c;
 const addAtEnd = (b: string) => (a: string): string => a + b
 
 
@@ -56,6 +56,7 @@ const myTaskEither =
 const result = pipe(
     myTaskEither,
     TE.map(add),
+    TE.ap(myTaskEither),
     TE.ap(myTaskEither)
 )
 
