@@ -24,7 +24,7 @@ const myTask = async (): Promise<number> => {
     return 10;
 }
 
-const add = (a: number) => (b: number) => (c: number) => a + b + c;
+
 const addAtEnd = (b: string) => (a: string): string => a + b
 
 
@@ -36,22 +36,14 @@ const myTaskEither =
         E.toError
     )
 
-// const result = pipe(
-//     myTaskEither,
-//     // TE.chain(res => myTaskEither), // will synchronous run
-//     TE.map(add(10)),
-//     TE.fold(
-//         () => T.of("Oops !! error"),
-//         (a) => T.of(`add result is ${a} !`)
-//     )
-// )
 
-// const result = pipe(
-//     TE.Do,
-//     TE.apS('x', myTaskEither),
-//     TE.apS('y', myTaskEither),
-//     TE.map(add)
-// )
+// 題目: 如何讓 add 的參數 (模擬為 Task), 而這些 Task 可以同步執行? 
+
+
+const add = (a: number) => (b: number) => (c: number) => a + b + c;
+
+
+// ---  方法一   
 
 const result = pipe(
     myTaskEither,
@@ -62,7 +54,21 @@ const result = pipe(
 
 
 result().then(
-    res => console.log(res)
+    res => console.log("result1 => ", res)
+)
+
+// ---  方法二
+
+const result2 = pipe(
+    TE.Do,
+    TE.apS('x', myTaskEither),
+    TE.apS('y', myTaskEither),
+    TE.apS('z', myTaskEither),
+    TE.map(({ x, y, z }) => x + y + z)
+)
+
+result2().then(
+    res => console.log("result2 => ", res)
 )
 
 const getHelloAndAddWorld = pipe(
