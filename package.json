@@ -2,10 +2,10 @@
   "name": "fpints",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "pipe_option.js",
   "scripts": {
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/fpTsPractice.js",
+    "start:run": "nodemon ./dist/sequence_practice.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {
@@ -25,7 +25,9 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "fp-ts": "^2.12.3",
+    "io-ts": "^2.2.18",
     "uuid": "^9.0.0"
   }
 }

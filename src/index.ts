@@ -3,7 +3,7 @@ console.log(index);
 
 const Identity = <T>(val: T) => ({
     val,
-    map: (f) => Identity(f(val)),
+    map: (f: any) => Identity(f(val)),
     inspect: () => `Identity(${val})`
 })
 

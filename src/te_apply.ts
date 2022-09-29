@@ -5,6 +5,8 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { ap } from 'fp-ts/lib/Identity'
 
+// 題目: 如何讓 add 的參數 (模擬為 Task), 而這些 Task 可以同步執行? 
+
 const delay = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
 
 const getHello: T.Task<string> = () => new Promise((resolve) => {
@@ -37,13 +39,13 @@ const myTaskEither =
     )
 
 
-// 題目: 如何讓 add 的參數 (模擬為 Task), 而這些 Task 可以同步執行? 
+
 
 
 const add = (a: number) => (b: number) => (c: number) => a + b + c;
 
 
-// ---  方法一   
+// Ans : ---  方法一   
 
 const result = pipe(
     myTaskEither,
@@ -57,7 +59,7 @@ result().then(
     res => console.log("result1 => ", res)
 )
 
-// ---  方法二
+// Ans : ---  方法二
 
 const result2 = pipe(
     TE.Do,
