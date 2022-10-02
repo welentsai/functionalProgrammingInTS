@@ -14,7 +14,7 @@ const getHello: T.Task<string> = () => new Promise((resolve) => {
 })
 
 
-const myTask = async (): Promise<number> => {
+export const myTask = async (): Promise<number> => {
     const id: string = uuid()
     // Do something before delay
     console.log(id, '-- before delay')
@@ -81,3 +81,11 @@ const getHelloAndAddWorld = pipe(
 getHelloAndAddWorld().then(
     res => console.log(res)
 )
+
+/**
+ *  Apply - ap operator
+ *  -- it is like the reverse of map. Rather than piping a value into a function, you pipe a function into a value
+ *  -- Currying is taking a function with multiple parameters and converting it into a higher order function 
+ *          such that it takes a single argument repeatedly
+ *  -- In essence, ap just makes it easier to curry function values while keeping the correct order of operations
+ */

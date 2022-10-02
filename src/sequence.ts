@@ -3,10 +3,11 @@ import * as O from "fp-ts/Option"
 import * as TE from "fp-ts/TaskEither"
 import * as E from "fp-ts/Either"
 import * as A from "fp-ts/Array";
-import { sequenceT } from "fp-ts/Apply";
+import { sequenceS, sequenceT } from "fp-ts/Apply";
 import { pipe } from "fp-ts/function";
 import * as t from 'io-ts'
 import axios, { AxiosResponse } from 'axios';
+import { myTask } from "./te_apply";
 
 
 /**
@@ -36,7 +37,7 @@ import axios, { AxiosResponse } from 'axios';
  * import { ap } from 'fp-ts/lib/Identity'
  * pipe(writeC, ap('key'), ap('value'), ap(true))
  * 
- * 另一個使用情境
+ * 另一個ap operator使用情境
  * Another use case for ap is when you have functions and values that don't play well together because one of them is trapped inside an Option or an Either
  * ap is useful in this scenario because it can lift values or functions into a particular category.
  * 
@@ -60,13 +61,9 @@ import axios, { AxiosResponse } from 'axios';
  * 
  * 問題： 如何把一個Array of Option<A> 轉成  Option of A[]  ?  
  * Array<Option<A>> => Option<A[]>
+  
  * 
- * Ans:
- * import * as A from 'fp-ts/lib/Array'
- * import * as O from 'fp-ts/lib/Option'
- * 
- *  const arr = [1, 2, 3].map(O.of) Array of Option<number>
- *  A.array.sequence(O.option)(arr) // Option<number[]>
+ 
  * 
  sequenceT(O.option)(O.of(123), O.of('asdf'))
   pipe(
@@ -76,66 +73,23 @@ import axios, { AxiosResponse } from 'axios';
   )
  */
 
-//create a schema to load our user data into
-const users = t.type({
-    data: t.array(t.type({
-        first_name: t.string
-    }))
-});
-
-//schema to hold the deepest of answers
-const answer = t.type({
-    ans: t.number
-});
-
 // -- Sequence Example 1
 
-
-/**
- * The most common usecase for a sequence is convert an array of say Options into an Option of an array.
- * 解方 => To do this, you need to provide sequence an instance of Applicative
- * 什麼是 Applicative => An applicative has 3 methods: of, map, and ap. 
- * 
- */
 const arr: O.Option<number>[] = [1, 2, 3].map(O.of)  // arr is a array of Option<number>
+console.log("arr -> ", arr)
 const result = A.sequence(O.Monad)(arr) // Option<number[]> // result is a Option of number array
 console.log("result -> ", result)
 
+
 /**
  * sequenceT is the same as a regular sequence except you pass it a rest parameter (vararg).
+ *  - T for tuple
+ *  - 第一個參數 -> applicative
+ *  - 第二個參數 -> a tuple (參數們)
  */
-const result2 = sequenceT(O.Monad)(O.of(123), O.of('asdf')) //sequenceT is the same as a regular sequence except you pass it a rest parameter (vararg)
+const result2 = sequenceT(O.Monad)(O.of(123), O.of('asdf'))
 console.log("result2 -> ", result2)
 
-/**
- * input 的參數都先用 sequenceT 裝在 Option中, 然後再用 map 給值到 function
- * 使用 ... spread syntax to convert the tuple into parameter form.
- */
-const result3 = pipe(
-    sequenceT(O.Monad)(O.of(123), O.of('asdf')),
-    O.map((args) => foo(...args)),
-    O.map(bar),
-)
-
-/**
- * SequenceS
- * Sometime our function takes a single object parameter rather than multiple arguments
- * 
- Example : 
- 
- pipe(
-  input,
-  ({ email, password }) =>
-    sequenceS(E.either)({
-      email: validateEmail(email),
-      password: validatePassword(password),
-    }),
-  E.map(register),
-)
-
- */
-
-console.log("result3 -> ", result3)
 
 // -- Sequence Example 2
 
@@ -151,6 +105,86 @@ function bar(a: boolean): object {
         _a: a
     }
 }
+
+/**
+ * input 的參數都先用 sequenceT 裝在 applicative (本範例是 Monad) , 然後再用 map 給值到 function
+ * 使用 ... spread syntax to convert the tuple into parameter form.
+ */
+
+const result3 = pipe(
+    sequenceT(O.Monad)(O.of(123), O.of('asdf')),
+    O.map((args) => foo(...args)),
+    O.map(bar),
+)
+
+
+
+//create a schema to load our user data into
+const users = t.type({
+    data: t.array(t.type({
+        first_name: t.string
+    }))
+});
+
+//schema to hold the deepest of answers
+const answer = t.type({
+    ans: t.number
+});
+
+console.log("result3 -> ", result3)
+
+
+/**
+ * SequenceS - Sometime our function takes a single object parameter rather than multiple arguments
+ *  - S for struct
+ */
+
+type RegisterInput = {
+    email: string
+    password: string
+}
+
+const input: RegisterInput = {
+    email: "xxyy",
+    password: "heyhey"
+}
+
+const validateEmail = (email: string): E.Either<Error, string> => {
+    //myTask()
+    console.log("validateEmail-")
+    return E.right(email)
+}
+
+const validPassworkd = (passwd: string): E.Either<Error, string> => {
+    //myTask()
+    console.log("validPassworkd-")
+    return E.right(passwd)
+}
+
+const register = (input: RegisterInput): string => {
+    return "Success"
+}
+
+
+/**
+ *  sequenceS 把參數都裝成 struct, 好處是可以用來做之後 domain type 的維護, 比如說 initial 一個domain type
+ */
+
+const result4 = pipe(
+    input,
+    ({ email, password }) =>
+        sequenceS(E.Monad)({
+            email: validateEmail(email),
+            password: validPassworkd(password)
+        }),
+    E.map(register)
+)
+
+console.log("result4 ->", result4)
+
+
+
+
 
 const httpGet = (url: string) => TE.tryCatch<Error, AxiosResponse>(
     () => axios.get(url),
