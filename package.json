@@ -5,7 +5,7 @@
   "main": "pipe_option.js",
   "scripts": {
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/traversal.js",
+    "start:run": "nodemon ./dist/task_delay.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {
