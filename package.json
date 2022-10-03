@@ -5,7 +5,7 @@
   "main": "pipe_option.js",
   "scripts": {
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/eitherTest.js",
+    "start:run": "nodemon ./dist/do_test.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {
@@ -27,6 +27,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "fp-ts": "^2.12.3",
+    "fp-ts-contrib": "^0.1.29",
     "io-ts": "^2.2.18",
     "uuid": "^9.0.0"
   }

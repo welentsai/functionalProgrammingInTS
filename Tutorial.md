@@ -150,5 +150,14 @@ traverse :: Applicative f, Traversable t
 > land on f ( t b ) , not t ( f b) , the f and t come out the other way around
 
 
+# The Do Notation
+
+- Understanding monads is key to understanding the Do notation
+
+- The Do notation is similar to sequenceT and sequenceS in the sense that you need to provide it an instance.
+
+- The difference is, sequences require the instance to be of the Apply type (ap + map) while Do requires a Monad type (ap + map + chain + of).
+
+
 
 

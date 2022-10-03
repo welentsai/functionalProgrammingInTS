@@ -22,6 +22,13 @@
 
 ![functor](imgs/Monad.png)
 
+A Monad is any type that has the following instance methods
+- of
+- map
+- chain (flatmap)
+- ap
+
+
 
 
 
