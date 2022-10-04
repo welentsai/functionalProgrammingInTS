@@ -151,13 +151,13 @@ const input: RegisterInput = {
 
 const validateEmail = (email: string): E.Either<Error, string> => {
     //myTask()
-    console.log("validateEmail-")
+    console.log(Date.now(), "validateEmail-")
     return E.right(email)
 }
 
 const validPassworkd = (passwd: string): E.Either<Error, string> => {
     //myTask()
-    console.log("validPassworkd-")
+    console.log(Date.now(), "validPassworkd-")
     return E.right(passwd)
 }
 
@@ -177,7 +177,7 @@ const result4 = pipe(
             email: validateEmail(email),
             password: validPassworkd(password)
         }),
-    E.map(register)
+    //E.map(register)
 )
 
 console.log("result4 ->", result4)
@@ -210,8 +210,35 @@ const getAnswer = pipe(
     )
 )
 
+const getUser2 = () => {
+    console.log(Date.now(), 'getUser2')
+    return pipe(
+        httpGet('https://reqres.in/api/users?page=1'),
+        TE.map(x => x.data),
+        TE.chain((str) => pipe(
+            users.decode(str),
+            E.mapLeft(err => new Error(String(err))),
+            TE.fromEither)
+        )
+    )
+}
+
+
+const getAnswer2 = () => {
+    console.log(Date.now(), 'getAnswer')
+    return pipe(
+        TE.right(42),
+        TE.chain(ans => pipe(
+            answer.decode({ ans }),
+            E.mapLeft(err => new Error(String(err))),
+            TE.fromEither)
+        )
+    )
+}
+
 pipe(
-    sequenceT(TE.Monad)(getAnswer, getUser),
+    //sequenceT(TE.Monad)(getAnswer, getUser),
+    sequenceT(TE.Monad)(getAnswer2(), getUser2()),
     TE.map(([answer, users]) => A.Monad.map(users.data, (user) => console.log(`Hello ${user.first_name}! The answer you're looking for is ${answer.ans}`))),
     TE.mapLeft(console.error)
 )();

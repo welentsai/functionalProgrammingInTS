@@ -19,8 +19,6 @@ const getPart = (id: string): TE.TaskEither<Error, string> => {
     return TE.right(`this is #${id}`)
 }
 
-
-
 const result: TE.TaskEither<Error, string[]> = pipe(
     getPartIds(),
     TE.chain(A.traverse(TE.Monad)(getPart)),
