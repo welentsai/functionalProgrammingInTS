@@ -5,7 +5,7 @@
   "main": "pipe_option.js",
   "scripts": {
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/sequence.js",
+    "start:run": "nodemon ./dist/lazy_evaluation.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {
