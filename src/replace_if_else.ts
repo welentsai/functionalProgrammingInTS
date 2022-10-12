@@ -4,11 +4,12 @@ interface WeatherConfig {
     sunny: "Sunny"
     rainy: "Rainy"
     snowy: "Snowy"
+    cloudy: "Cloudy"
 }
 
 type Weather = WeatherConfig[keyof WeatherConfig]
 
-let currentWeather = "Sunny"
+let currentWeather: Weather = "Sunny"
 
 const weatherToFeeling: string = (currentWeather === "Sunny") ? "happy" : (currentWeather === "Rainy") ? "sad" : "cold"
 
@@ -19,17 +20,17 @@ console.log(weatherToFeeling)
  * Pattern Matching
  */
 
-const weatherToFeeling2 = match(currentWeather)
+const weatherToFeeling2 = match<Weather>(currentWeather)
     .with("Sunny", () => "happy")
     .with("Rainy", () => "sad")
     .with("Snowy", () => "cold")
-    .otherwise(() => "Unknown!")
+    .otherwise(() => "Unkown")
 
 console.log("=== Pattern Matching ===")
 console.log(weatherToFeeling2)
 
-currentWeather = ""
-const weatherToFeeling3 = match(currentWeather)
+currentWeather = "Cloudy"
+const weatherToFeeling3 = match<Weather>(currentWeather)
     .with("Sunny", () => "happy")
     .with("Rainy", () => "sad")
     .with("Snowy", () => "cold")
@@ -49,7 +50,7 @@ type Weather2 =
 
 let input: Weather2 = { type: "Rainy" }
 
-const output = match(input)
+const output = match<Weather2>(input)
     .with({ type: "Sunny" }, () => "happy")
     .with({ type: "Rainy" }, () => "sad")
     .with({ type: "Snowy" }, () => "cold")
