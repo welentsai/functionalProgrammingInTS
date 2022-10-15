@@ -5,7 +5,7 @@
   "main": "pipe_option.js",
   "scripts": {
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/replace_if_else.js",
+    "start:run": "nodemon ./dist/fp-ts-option-replace-if-else.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {
@@ -25,11 +25,13 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "@types/url-parse": "^1.4.8",
     "axios": "^0.27.2",
     "fp-ts": "^2.12.3",
     "fp-ts-contrib": "^0.1.29",
     "io-ts": "^2.2.18",
     "ts-pattern": "^4.0.5",
+    "url-parse": "^1.5.10",
     "uuid": "^9.0.0"
   }
 }

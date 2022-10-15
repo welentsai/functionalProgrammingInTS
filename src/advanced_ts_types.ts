@@ -1,3 +1,7 @@
+import * as E from "fp-ts/lib/Either"
+import * as O from "fp-ts/lib/Option"
+import { pipe } from "fp-ts/lib/function"
+
 /**
  *  Conditional Types **************************
  */
@@ -41,3 +45,11 @@ interface UserRoleConfig {
 }
 
 type Role = UserRoleConfig[keyof UserRoleConfig][number]
+
+
+
+/**
+ *  Function Signature **************************
+ */
+
+declare const getCategoryById: (id: string) => E.Either<Error, O.Option<string>>
