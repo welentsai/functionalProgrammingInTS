@@ -4,8 +4,9 @@
   "description": "",
   "main": "pipe_option.js",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/fp-ts-option-replace-if-else.js",
+    "start:run": "nodemon ./dist/fastify_example/fp-index.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/welentsai/functionalProgrammingInTS#readme",
   "devDependencies": {
+    "@types/node": "^18.11.0",
     "@types/uuid": "^8.3.4",
     "concurrently": "^7.4.0",
     "nodemon": "^2.0.20"
@@ -27,9 +29,12 @@
   "dependencies": {
     "@types/url-parse": "^1.4.8",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.9.0",
     "fp-ts": "^2.12.3",
     "fp-ts-contrib": "^0.1.29",
     "io-ts": "^2.2.18",
+    "npm": "^8.19.2",
     "ts-pattern": "^4.0.5",
     "url-parse": "^1.5.10",
     "uuid": "^9.0.0"
