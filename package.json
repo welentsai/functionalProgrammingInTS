@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start:build": "tsc -w",
-    "start:run": "nodemon ./dist/fastify_example/fp-index.js",
+    "start:run": "nodemon ./dist/sequence.js",
     "start": "concurrently npm:start:*"
   },
   "repository": {

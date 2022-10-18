@@ -7,7 +7,7 @@ import { sequenceS, sequenceT } from "fp-ts/Apply";
 import { pipe } from "fp-ts/function";
 import * as t from 'io-ts'
 import axios, { AxiosResponse } from 'axios';
-import { myTask } from "./te_apply";
+import { myTask } from "./fp-ts-apply-TE";
 
 
 /**
@@ -117,6 +117,7 @@ const result3 = pipe(
     O.map(bar),
 )
 
+console.log("result3 -> ", result3)
 
 
 //create a schema to load our user data into
@@ -131,7 +132,7 @@ const answer = t.type({
     ans: t.number
 });
 
-console.log("result3 -> ", result3)
+
 
 
 /**
@@ -181,9 +182,6 @@ const result4 = pipe(
 )
 
 console.log("result4 ->", result4)
-
-
-
 
 
 const httpGet = (url: string) => TE.tryCatch<Error, AxiosResponse>(
