@@ -24,7 +24,8 @@
     "@types/node": "^18.11.0",
     "@types/uuid": "^8.3.4",
     "concurrently": "^7.4.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "typescript": "^4.8.4"
   },
   "dependencies": {
     "@types/url-parse": "^1.4.8",
