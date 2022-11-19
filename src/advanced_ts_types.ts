@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either"
 import * as O from "fp-ts/lib/Option"
 import { pipe } from "fp-ts/lib/function"
+import { cons } from "fp-ts-contrib/lib/List"
 
 /**
  *  Conditional Types **************************
@@ -53,3 +54,19 @@ type Role = UserRoleConfig[keyof UserRoleConfig][number]
  */
 
 declare const getCategoryById: (id: string) => E.Either<Error, O.Option<string>>
+
+
+
+// Unique resource identifier — a type tag:
+
+// Variables can be declared using const
+const URIOri = 'Task'
+console.log(URIOri)
+// typeof 是 type predicates 
+
+// Type aliases create a new name for a type,  type aliases can act sort of like interfaces
+// URI is a type alias 
+type URI = typeof URIOri
+
+const a: URI = 'Task'  // pass compiler check
+// const b: URI = 'TaskC' // can not pass compiler check

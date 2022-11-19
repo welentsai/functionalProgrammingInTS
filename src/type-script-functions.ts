@@ -45,6 +45,7 @@ let myAdd4 = function (x: number, y: number): number {
 
 // myAdd has the full function type
 // 等號(=)後面接的就是 anonymous function 
+// 冒號(:)後面是 type
 let myAdd5: (baseValue: number, increment: number) => number = function (x, y) {
     return x + y;
 };
