@@ -1,7 +1,8 @@
-import { pipe } from "fp-ts/function";
+import { pipe, flow } from "fp-ts/function";
 import * as E from "fp-ts/Either"
 import * as T from 'fp-ts/Task'
 import * as TE from "fp-ts/TaskEither"
+import { sequenceS, sequenceT } from "fp-ts/Apply";
 
 interface AppConfig {
     readonly host: string; // web-server host name
@@ -11,14 +12,14 @@ interface AppConfig {
 
 const validateHost = (host: string): E.Either<Error, string> => {
     console.log(Date.now(), "-validateHost-")
-    return E.right(host)
-    // return E.left(new Error("host not valid !!"))
+    // return E.right(host)
+    return E.left(new Error("host not valid !!"))
 }
 
 const validatePort = (port: number): E.Either<Error, number> => {
     console.log(Date.now(), "-validatePort--")
-    return E.right(port)
-    // return E.left(new Error("port not valid !!"))
+    // return E.right(port)
+    return E.left(new Error("port not valid !!"))
 }
 
 const validateConnectionString = (connectionString: string): E.Either<Error, string> => {
@@ -58,16 +59,28 @@ function appConfig(host: string, port: number, connectionString: string): AppCon
 }
 
 // parallel validation !!
+const apConfig = pipe(
+    E.of(toAppConfig),
+    E.ap(validateHost(data.host)),
+    E.ap(validatePort(data.port)),
+    E.ap(validateConnectionString(data.connectionString))
+)
 
-function createAppConfig(host: string, port: number, connStr: string): E.Either<Error, AppConfig> {
-    return pipe(
-        E.of(toAppConfig),
-        E.ap(validateHost(data.host)),
-        E.ap(validatePort(data.port)),
-        E.ap(validateConnectionString(data.connectionString))
-    )
-}
+console.log(apConfig)
 
-console.log(createAppConfig("http://123", 5566, "http://abcd"))
+
+// sequence
+const result4 = pipe(
+    data,
+    ({ host, port, connectionString }) =>
+        sequenceS(E.Applicative)({
+            host: validateHost(host),
+            port: validatePort(port),
+            connectionString: validateConnectionString(connectionString)
+        }),
+)
+
+console.log(result4)
+
 
 

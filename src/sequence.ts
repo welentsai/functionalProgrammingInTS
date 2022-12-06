@@ -178,7 +178,7 @@ const result4 = pipe(
             email: validateEmail(email),
             password: validPassworkd(password)
         }),
-    //E.map(register)
+    // E.map(register)
 )
 
 console.log("result4 ->", result4)
