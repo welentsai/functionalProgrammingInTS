@@ -76,7 +76,7 @@ assert.deepStrictEqual(solution3(['1', '2', '3']), E.right(6))
 // you get only the first error
 assert.deepStrictEqual(solution3(['1', 'a', 'b']), E.left('a is not a number'))
 
-
+// !!重要!! => 拿到所有的 errors, 用 E.mapLeft(RA.of) 裝在RA容器中
 // If you want to get all errors
 const solution4 = (
     input: ReadonlyArray<string>
@@ -97,8 +97,8 @@ assert.deepStrictEqual(
     E.left(['a is not a number', 'b is not a number'])
 )
 
-console.log(solution4(['1', 'a', 'b']))
-console.log(solution4(['1', '2', '3']))
+console.log('solution4', solution4(['1', 'a', 'b']))
+console.log('solution4', solution4(['1', '2', '3']))
 
 
 //  if you just want to skip bad inputs but keep adding good ones
