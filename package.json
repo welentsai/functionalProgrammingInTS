@@ -7,7 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "start:build": "tsc -w",
     "start:run": "nodemon ./dist/parallel-task.js",
-    "dev": "concurrently \"tsc -w \" \"nodemon ./dist/parallel-applicative.js \" ",
+    "dev": "concurrently \"tsc -w \" \"nodemon ./dist/fp-ts-IO.js \" ",
     "start": "concurrently npm:start:*"
   },
   "repository": {
