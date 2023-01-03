@@ -1,5 +1,6 @@
 import * as t from 'io-ts'
 import * as E from 'fp-ts/Either'
+import {pipe} from 'fp-ts/lib/function'
 
 // using typeof to refer and get basic types
 // ReturnType<T>. It takes a function type and produces its return type:
@@ -107,3 +108,45 @@ console.log(b(null, []))
 }
  */
 console.log(b('string', [])) // { _tag: 'Right', right: 'string' }
+
+  const IntegerFromString = new t.Type<number, string, unknown>(
+    'IntegerFromString',
+    (u): u is number => t.Int.is(u),
+    (u, c) => pipe(
+        t.string.validate(u, c),
+        E.chain(s => {
+            const n = +s
+            return isNaN(n) || !Number.isInteger(n) ? t.failure(s, c) : t.success(n)
+        })),
+    String
+  )
+
+  console.log("IntegerFromString string", IntegerFromString.decode('a string'))
+  console.log("IntegerFromString null", IntegerFromString.decode(null))
+  console.log("IntegerFromString null", IntegerFromString.decode('1233333333333333333333333333333333333'))
+  console.log("IntegerFromString encode", IntegerFromString.encode(123))
+
+  const IntegerFromString2 = new t.Type<number, string, unknown>(
+    'IntegerFromString',
+    (u): u is number => t.Int.is(u),
+    (u, c) => pipe(
+        t.string.validate(u, c),
+        E.chain(s => {
+            const n = +s
+            return isNaN(n) || !Number.isInteger(n) ? t.failure(s, c) : t.success(n)
+        })),
+    //   E.Monad.chain(t.string.validate(u, c), s => {
+    //     const n = +s
+    //     return isNaN(n) || !Number.isInteger(n) ? t.failure(s, c) : t.success(n)
+    //   }),
+    String
+  )
+  
+
+  console.log("IntegerFromString string", IntegerFromString2.decode('a string'))
+  console.log("IntegerFromString null", IntegerFromString2.decode(null))
+  console.log("IntegerFromString null", IntegerFromString2.decode('12.3'))
+  console.log("IntegerFromString null", IntegerFromString2.decode('123'))
+  console.log("IntegerFromString encode", IntegerFromString2.encode(123))
+
+  
