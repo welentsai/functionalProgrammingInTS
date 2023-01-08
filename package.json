@@ -7,8 +7,11 @@
     "build": "tsc -p tsconfig.json",
     "start:build": "tsc -w",
     "start:run": "nodemon ./dist/parallel-task.js",
-    "dev": "concurrently \"tsc -w \" \"nodemon ./dist/io-ts-type-2.js \" ",
-    "start": "concurrently npm:start:*"
+    "dev": "concurrently \"tsc -w \" \"nodemon ./dist/io-ts-type-4.js \" ",
+    "start": "concurrently npm:start:*",
+    "lint": "eslint . --ext .ts",
+    "fix-lint": "eslint . --ext .ts --fix",
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "repository": {
     "type": "git",
@@ -24,9 +27,14 @@
   "devDependencies": {
     "@types/node": "^18.11.0",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
     "concurrently": "^7.4.0",
+    "eslint": "^8.31.0",
+    "io-ts-types": "^0.5.19",
     "newtype-ts": "^0.3.5",
     "nodemon": "^2.0.20",
+    "prettier": "^2.8.2",
     "typescript": "^4.8.4"
   },
   "dependencies": {
