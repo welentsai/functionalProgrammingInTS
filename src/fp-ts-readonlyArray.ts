@@ -18,18 +18,14 @@ console.log(result)
 result = RA.sequence(O.Applicative)([a, b, c, d])
 console.log(result)
 
-result = pipe(
-    [a, b, c, c],
-    RA.sequence(O.Applicative)
-)
+result = pipe([a, b, c, c], RA.sequence(O.Applicative))
 console.log(result)
-
 
 // traverse example
 
 const parseInteger = (s: string): E.Either<string, number> => {
-    const n = parseInt(s, 10)
-    return isNaN(n) ? E.left(`${s} is not a number`) : E.right(n)
+  const n = parseInt(s, 10)
+  return isNaN(n) ? E.left(`${s} is not a number`) : E.right(n)
 }
 
 console.log(parseInteger('1'))

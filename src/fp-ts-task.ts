@@ -17,9 +17,6 @@ const bar = T.of(foo)
 // bar is same as fdsa
 const fdsa: T.Task<string> = () => Promise.resolve(foo)
 
-
-bar().then(
-    res => console.log(res)
-)
+bar().then((res) => console.log(res))
 
 console.log('-')

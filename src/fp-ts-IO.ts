@@ -13,23 +13,29 @@ import * as O from 'fp-ts/Option'
 import { io } from 'fp-ts/IO'
 
 interface IO<A> {
-    (): A
+  (): A
 }
 
-const getItem = (key: string): IO<O.Option<string>> => () =>
+const getItem =
+  (key: string): IO<O.Option<string>> =>
+  () =>
     O.fromNullable(localStorage.getItem(key))
 
-const setItem = (key: string, value: string): IO<void> => () =>
+const setItem =
+  (key: string, value: string): IO<void> =>
+  () =>
     localStorage.setItem(key, value)
-
 
 const now: IO<number> = () => new Date().getTime()
 
 console.log(now())
 
-const log = (s: unknown): IO<void> => () => console.log(s)
+const log =
+  (s: unknown): IO<void> =>
+  () =>
+    console.log(s)
 
-log("123")()
+log('123')()
 
 const random: IO<number> = () => Math.random()
 

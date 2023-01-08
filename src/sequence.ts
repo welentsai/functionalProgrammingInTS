@@ -1,14 +1,13 @@
-import * as f from "fp-ts/function";
-import * as O from "fp-ts/Option"
-import * as TE from "fp-ts/TaskEither"
-import * as E from "fp-ts/Either"
-import * as A from "fp-ts/Array";
-import { sequenceS, sequenceT } from "fp-ts/Apply";
-import { pipe } from "fp-ts/function";
+import * as f from 'fp-ts/function'
+import * as O from 'fp-ts/Option'
+import * as TE from 'fp-ts/TaskEither'
+import * as E from 'fp-ts/Either'
+import * as A from 'fp-ts/Array'
+import { sequenceS, sequenceT } from 'fp-ts/Apply'
+import { pipe } from 'fp-ts/function'
 import * as t from 'io-ts'
-import axios, { AxiosResponse } from 'axios';
-import { myTask } from "./fp-ts-apply-TE";
-
+import axios, { AxiosResponse } from 'axios'
+import { myTask } from './fp-ts-apply-TE'
 
 /**
  * And applicatives form the basis for sequences and traversals
@@ -75,11 +74,10 @@ import { myTask } from "./fp-ts-apply-TE";
 
 // -- Sequence Example 1
 
-const arr: O.Option<number>[] = [1, 2, 3].map(O.of)  // arr is a array of Option<number>
-console.log("arr -> ", arr)
+const arr: O.Option<number>[] = [1, 2, 3].map(O.of) // arr is a array of Option<number>
+console.log('arr -> ', arr)
 const result = A.sequence(O.Monad)(arr) // Option<number[]> // result is a Option of number array
-console.log("result -> ", result)
-
+console.log('result -> ', result)
 
 /**
  * sequenceT is the same as a regular sequence except you pass it a rest parameter (vararg).
@@ -88,22 +86,21 @@ console.log("result -> ", result)
  *  - 第二個參數 -> a tuple (參數們)
  */
 const result2 = sequenceT(O.Monad)(O.of(123), O.of('asdf'))
-console.log("result2 -> ", result2)
-
+console.log('result2 -> ', result2)
 
 // -- Sequence Example 2
 
 function foo(a: number, b: string): boolean {
-    data: {
-        _a: a
-        _b: b
-    }
-    return true
+  {
+    a
+    b
+  }
+  return true
 }
 function bar(a: boolean): object {
-    return {
-        _a: a
-    }
+  return {
+    _a: a
+  }
 }
 
 /**
@@ -112,28 +109,26 @@ function bar(a: boolean): object {
  */
 
 const result3 = pipe(
-    sequenceT(O.Monad)(O.of(123), O.of('asdf')),
-    O.map((args) => foo(...args)),
-    O.map(bar),
+  sequenceT(O.Monad)(O.of(123), O.of('asdf')),
+  O.map((args) => foo(...args)),
+  O.map(bar)
 )
 
-console.log("result3 -> ", result3)
-
+console.log('result3 -> ', result3)
 
 //create a schema to load our user data into
 const users = t.type({
-    data: t.array(t.type({
-        first_name: t.string
-    }))
-});
+  data: t.array(
+    t.type({
+      first_name: t.string
+    })
+  )
+})
 
 //schema to hold the deepest of answers
 const answer = t.type({
-    ans: t.number
-});
-
-
-
+  ans: t.number
+})
 
 /**
  * SequenceS - Sometime our function takes a single object parameter rather than multiple arguments
@@ -141,105 +136,117 @@ const answer = t.type({
  */
 
 type RegisterInput = {
-    email: string
-    password: string
+  email: string
+  password: string
 }
 
 const input: RegisterInput = {
-    email: "xxyy",
-    password: "heyhey"
+  email: 'xxyy',
+  password: 'heyhey'
 }
 
 const validateEmail = (email: string): E.Either<Error, string> => {
-    //myTask()
-    console.log(Date.now(), "validateEmail-")
-    return E.right(email)
+  //myTask()
+  console.log(Date.now(), 'validateEmail-')
+  return E.right(email)
 }
 
 const validPassworkd = (passwd: string): E.Either<Error, string> => {
-    //myTask()
-    console.log(Date.now(), "validPassworkd-")
-    return E.right(passwd)
+  //myTask()
+  console.log(Date.now(), 'validPassworkd-')
+  return E.right(passwd)
 }
 
 const register = (input: RegisterInput): string => {
-    return "Success"
+  return 'Success'
 }
-
 
 /**
  *  sequenceS 把參數都裝成 struct, 好處是可以用來做之後 domain type 的維護, 比如說 initial 一個domain type
  */
 
 const result4 = pipe(
-    input,
-    ({ email, password }) =>
-        sequenceS(E.Monad)({
-            email: validateEmail(email),
-            password: validPassworkd(password)
-        }),
-    // E.map(register)
+  input,
+  ({ email, password }) =>
+    sequenceS(E.Monad)({
+      email: validateEmail(email),
+      password: validPassworkd(password)
+    })
+  // E.map(register)
 )
 
-console.log("result4 ->", result4)
+console.log('result4 ->', result4)
 
-
-const httpGet = (url: string) => TE.tryCatch<Error, AxiosResponse>(
+const httpGet = (url: string) =>
+  TE.tryCatch<Error, AxiosResponse>(
     () => axios.get(url),
-    reason => new Error(String(reason))
-)
+    (reason) => new Error(String(reason))
+  )
 
 const getUser = pipe(
-    httpGet('https://reqres.in/api/users?page=1'),
-    TE.map(x => x.data),
-    TE.chain((str) => pipe(
-        users.decode(str),
-        E.mapLeft(err => new Error(String(err))),
-        TE.fromEither)
+  httpGet('https://reqres.in/api/users?page=1'),
+  TE.map((x) => x.data),
+  TE.chain((str) =>
+    pipe(
+      users.decode(str),
+      E.mapLeft((err) => new Error(String(err))),
+      TE.fromEither
     )
-);
+  )
+)
 
 const getAnswer = pipe(
-    TE.right(42),
-    TE.chain(ans => pipe(
-        answer.decode({ ans }),
-        E.mapLeft(err => new Error(String(err))),
-        TE.fromEither)
+  TE.right(42),
+  TE.chain((ans) =>
+    pipe(
+      answer.decode({ ans }),
+      E.mapLeft((err) => new Error(String(err))),
+      TE.fromEither
     )
+  )
 )
 
 const getUser2 = () => {
-    console.log(Date.now(), 'getUser2')
-    return pipe(
-        httpGet('https://reqres.in/api/users?page=1'),
-        TE.map(x => x.data),
-        TE.chain((str) => pipe(
-            users.decode(str),
-            E.mapLeft(err => new Error(String(err))),
-            TE.fromEither)
-        )
+  console.log(Date.now(), 'getUser2')
+  return pipe(
+    httpGet('https://reqres.in/api/users?page=1'),
+    TE.map((x) => x.data),
+    TE.chain((str) =>
+      pipe(
+        users.decode(str),
+        E.mapLeft((err) => new Error(String(err))),
+        TE.fromEither
+      )
     )
+  )
 }
 
-
 const getAnswer2 = () => {
-    console.log(Date.now(), 'getAnswer')
-    return pipe(
-        TE.right(42),
-        TE.chain(ans => pipe(
-            answer.decode({ ans }),
-            E.mapLeft(err => new Error(String(err))),
-            TE.fromEither)
-        )
+  console.log(Date.now(), 'getAnswer')
+  return pipe(
+    TE.right(42),
+    TE.chain((ans) =>
+      pipe(
+        answer.decode({ ans }),
+        E.mapLeft((err) => new Error(String(err))),
+        TE.fromEither
+      )
     )
+  )
 }
 
 pipe(
-    //sequenceT(TE.Monad)(getAnswer, getUser),
-    sequenceT(TE.Monad)(getAnswer2(), getUser2()),
-    TE.map(([answer, users]) => A.Monad.map(users.data, (user) => console.log(`Hello ${user.first_name}! The answer you're looking for is ${answer.ans}`))),
-    TE.mapLeft(console.error)
-)();
+  //sequenceT(TE.Monad)(getAnswer, getUser),
+  sequenceT(TE.Monad)(getAnswer2(), getUser2()),
+  TE.map(([answer, users]) =>
+    A.Monad.map(users.data, (user) =>
+      console.log(
+        `Hello ${user.first_name}! The answer you're looking for is ${answer.ans}`
+      )
+    )
+  ),
+  TE.mapLeft(console.error)
+)()
 
 // output:
 // [start:*run] Hello George! The answer you're looking for is 42
