@@ -70,7 +70,7 @@ const GroupCodec = t.type({
 })
 
 //***  typeof => evaluate the return value of some identifier
-type t = typeof GroupCodec
+type GroupCodecT = typeof GroupCodec
 
 /**
  * The advantage of using io-ts to define the runtime type is that we can validate the type at runtime,
