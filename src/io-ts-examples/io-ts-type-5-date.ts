@@ -2,10 +2,6 @@ import { pipe } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
 import * as E from 'fp-ts/Either'
 
-export enum ISODateBrand { _ = ''}
-
-export type ISODate = ISODateBrand & string;
-
 interface TimestampBrand {
   readonly Timestamp: unique symbol
 }
