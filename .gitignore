@@ -1,2 +1,10 @@
 node_modules/
 dist/
+.idea/.gitignore
+.idea/fpTs.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/libraries/test_package.xml
+.idea/libraries/ts_commonjs_default_export.xml
