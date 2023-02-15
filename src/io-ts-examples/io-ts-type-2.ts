@@ -16,10 +16,20 @@ const NonEmptyString50 = t.brand(
 
 type NonEmptyString50 = t.TypeOf<typeof NonEmptyString50>
 
+// decode -> from primitive type to opaque type
 console.log(PathReporter.report(NonEmptyString50.decode(42))) // validation
 console.log(PathReporter.report(NonEmptyString50.decode('123')))
-console.log(NonEmptyString50.decode('123'))
-// console.log(NonEmptyString50.encode('abc')) // from brand type to primitive type
+console.log('3->',NonEmptyString50.decode('123'))
+
+// from brand type to primitive type
+const decodeResult = pipe(
+  NonEmptyString50.decode('123'),
+  E.match(
+    (e) => `Invalid input`,
+    (data) => `${data}`
+  )
+)
+console.log('decode result ->', decodeResult)
 
 const GroupCodec = t.type({
   id: NonEmptyString50,
@@ -29,7 +39,7 @@ const GroupCodec = t.type({
 console.log(GroupCodec.decode({ id: '123', name: 'welen!' }))
 console.log(
   GroupCodec.decode({
-    id: '123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    id: '123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     name: 'welen'
   })
 )
@@ -43,6 +53,6 @@ const result = pipe(
   )
 )
 
-console.log(result)
+console.log('opaque -> primitive:', result)
 
 // const result = GroupCodec.encode({id: '123', name: 'welen'})

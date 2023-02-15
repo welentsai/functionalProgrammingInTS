@@ -7,7 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "start:build": "tsc -w",
     "start:run": "nodemon ./dist/parallel-task.js",
-    "dev": "concurrently \"tsc -w \" \"nodemon ./dist/fp-ts-refinement.js \" ",
+    "dev": "concurrently \"tsc -w \" \"nodemon ./dist/io-ts-examples/io-ts-type-2.js \" ",
     "start": "concurrently npm:start:*",
     "lint": "eslint . --ext .ts",
     "fix-lint": "eslint . --ext .ts --fix",
