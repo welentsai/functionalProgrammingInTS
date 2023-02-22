@@ -8,10 +8,10 @@ interface TimestampBrand {
 
 const Timestamp = t.brand(
   t.Int,
-  (t: t.Int): t is t.Branded<t.Int, TimestampBrand> => t >= -8640000000000000 && t <= 8640000000000000,
+  (t: t.Int): t is t.Branded<t.Int, TimestampBrand> =>
+    t >= -8640000000000000 && t <= 8640000000000000,
   'Timestamp'
 )
-
 
 /**
  * Type<A, O, I> (called “codec”) is the runtime representation of the static type A
@@ -38,19 +38,17 @@ export type DateFromString = t.TypeOf<typeof DateFromStringCodec>
 console.log(DateFromStringCodec.decode('2022-01-01'))
 console.log(DateFromStringCodec.encode(new Date(1973, 10, 30)))
 
-
 const myStructCodec = t.type({
-    myStr: t.string,
-    myDate: DateFromStringCodec
+  myStr: t.string,
+  myDate: DateFromStringCodec
 })
 
-console.log(myStructCodec.decode({myStr: '123', myDate: '2022-01-01'}))
-
+console.log(myStructCodec.decode({ myStr: '123', myDate: '2022-01-01' }))
 
 const result = pipe(
-    {myStr: '123', myDate: '2022-01-01a'},
-    myStructCodec.decode,
-    E.map(data => data.myDate)
+  { myStr: '123', myDate: '2022-01-01a' },
+  myStructCodec.decode,
+  E.map((data) => data.myDate)
 )
 
 console.log(result)

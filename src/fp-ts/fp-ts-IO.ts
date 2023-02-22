@@ -10,36 +10,36 @@ Note that IO represents a computation that never fails
  */
 
 import * as O from 'fp-ts/Option'
-import { io } from 'fp-ts/IO'
+import { io } from 'fp-ts/lib'
 
-interface IO<A> {
-  (): A
-}
+// interface IO<A> {
+//   (): A
+// }
 
 const getItem =
-  (key: string): IO<O.Option<string>> =>
+  (key: string): io.IO<O.Option<string>> =>
   () =>
     O.fromNullable(localStorage.getItem(key))
 
 const setItem =
-  (key: string, value: string): IO<void> =>
+  (key: string, value: string): io.IO<void> =>
   () =>
     localStorage.setItem(key, value)
 
-const now: IO<number> = () => new Date().getTime()
+const now: io.IO<number> = () => new Date().getTime()
 
-console.log(now())
+console.log('IO<number> ->', now())
 
 const log =
-  (s: unknown): IO<void> =>
+  (s: unknown): io.IO<void> =>
   () =>
     console.log(s)
 
 log('123')()
 
-const random: IO<number> = () => Math.random()
+const random: io.IO<number> = () => Math.random()
 
-const program: IO<void> = io.chain(random, log)
+const program: io.IO<void> = io.chain(log)(random)
 // Note that nothing happens until you call program().
 
 program()

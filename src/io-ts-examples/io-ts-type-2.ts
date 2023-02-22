@@ -19,7 +19,7 @@ type NonEmptyString50 = t.TypeOf<typeof NonEmptyString50>
 // decode -> from primitive type to opaque type
 console.log(PathReporter.report(NonEmptyString50.decode(42))) // validation
 console.log(PathReporter.report(NonEmptyString50.decode('123')))
-console.log('3->',NonEmptyString50.decode('123'))
+console.log('3->', NonEmptyString50.decode('123'))
 
 // from brand type to primitive type
 const decodeResult = pipe(

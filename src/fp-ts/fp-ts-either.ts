@@ -65,9 +65,6 @@ const solution3 = (input: ReadonlyArray<string>): E.Either<string, number> => {
   return pipe(input, RA.traverse(E.Applicative)(parseInteger), E.map(getSum))
 }
 
-const result2 = solution(['1', '2', '3'])
-console.log(result2)
-
 assert.deepStrictEqual(solution(['1', '2', '3']), E.right(6))
 assert.deepStrictEqual(solution2(['1', '2', '3']), E.right(6))
 assert.deepStrictEqual(solution3(['1', '2', '3']), E.right(6))
@@ -122,4 +119,4 @@ const solution6: (input: ReadonlyArray<string>) => number = flow(
   getSum
 )
 
-console.log(solution6(['1', '2', '3']))
+console.log('solution6->', solution6(['1', '2', '3'])) // olution6-> 6

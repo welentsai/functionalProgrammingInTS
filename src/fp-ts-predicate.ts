@@ -1,7 +1,7 @@
-import { Predicate } from "fp-ts/Predicate"
-import {getMonoid} from "fp-ts/function"
+import { Predicate } from 'fp-ts/Predicate'
+import { getMonoid } from 'fp-ts/function'
 import * as B from 'fp-ts/boolean'
-import assert from "assert"
+import assert from 'assert'
 
 /**
     -- Predicate 的定義
@@ -17,10 +17,9 @@ const g: Predicate<number> = (n) => n >= 0
 
 const M1 = getMonoid(B.MonoidAll)<number>()
 
-assert.deepStrictEqual(M1.concat(f,g)(1), true)
-assert.deepStrictEqual(M1.concat(f,g)(3), false)
+assert.deepStrictEqual(M1.concat(f, g)(1), true)
+assert.deepStrictEqual(M1.concat(f, g)(3), false)
 
 const M2 = getMonoid(B.MonoidAny)<number>()
-assert.deepStrictEqual(M2.concat(f,g)(1), true)
-assert.deepStrictEqual(M2.concat(f,g)(3), true)
-
+assert.deepStrictEqual(M2.concat(f, g)(1), true)
+assert.deepStrictEqual(M2.concat(f, g)(3), true)

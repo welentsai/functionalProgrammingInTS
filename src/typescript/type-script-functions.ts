@@ -1,3 +1,5 @@
+import { flow } from 'fp-ts/lib/function'
+
 // Named function
 function add(x: number, y: number) {
   return x + y
@@ -31,6 +33,13 @@ const myAdd3: (x: number, y: number) => number = function (
   return x + y
 }
 
+const myAdd3_1: (x: number, y: number) => number = (x, y) => {
+  return x + y
+}
+
+console.log('myAdd3->', myAdd3(1, 2))
+console.log('myAdd3_1->', myAdd3_1(1, 2))
+
 /***
  * Inferring the types
  */
@@ -43,12 +52,11 @@ const myAdd4 = function (x: number, y: number): number {
 // myAdd has the full function type
 // 等號(=)後面接的就是 anonymous function
 // 冒號(:)後面是 type
-const myAdd5: (baseValue: number, increment: number) => number = function (
-  x,
-  y
-) {
-  return x + y
+const myAdd5: (baseValue: number) => number = function (x) {
+  return x + 5
 }
+
+const myAdd5_1: (baseValue: number) => number = (x) => x + 5
 
 const myAdd6 = (x: number, y: number) => {
   return x + y

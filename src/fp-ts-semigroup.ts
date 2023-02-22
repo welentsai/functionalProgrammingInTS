@@ -1,7 +1,7 @@
 import { Predicate } from 'fp-ts/Predicate'
 import { getSemigroup } from 'fp-ts/function'
 import * as B from 'fp-ts/boolean'
-import assert from "assert"
+import assert from 'assert'
 
 const f: Predicate<number> = (n) => n <= 2
 const g: Predicate<number> = (n) => n >= 0
