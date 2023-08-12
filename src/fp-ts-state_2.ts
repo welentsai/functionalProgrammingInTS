@@ -47,3 +47,15 @@ const config: WriterConfig = {
   logs: []
 }
 console.log(fractionThreeTimes(startValue)(config))
+
+// [1] [
+// [1]   1.25,
+// [1]   {
+// [1]     denominator: 2,
+// [1]     logs: [
+// [1]       'Numerator: 10. Denominator: 2',
+// [1]       'Numerator: 5. Denominator: 2',
+// [1]       'Numerator: 2.5. Denominator: 2'
+// [1]     ]
+// [1]   }
+// [1] ]

@@ -33,7 +33,7 @@ console.log(pay(30)('Unpaid')) // { _tag: 'None' }, 'Unpaid' ]
 console.log(pay(30)('Paid')) // [ { _tag: 'None' }, 'Paid' ]
 
 turn('Paid') // [O.some("Gumball"), "Unpaid"]
-console.log(turn('Paid'))
+console.log(turn('Paid')) // [O.some("Gumball"), "Unpaid"]
 
 /**
  *  Now here comes the tricky part, how do we combine these functions together to build up our state machine?
@@ -64,6 +64,16 @@ const [outputs, finalState] = S.sequenceArray(actions)('Unpaid')
 const numGumballs = outputs.filter(O.isSome).length //2
 
 console.log('outputs', outputs)
-console.log(pay(50)('Unpaid'))
+
+// [1] outputs [
+// [1]   { _tag: 'None' },
+// [1]   { _tag: 'None' },
+// [1]   { _tag: 'None' },
+// [1]   { _tag: 'Some', value: 'Gumball' },
+// [1]   { _tag: 'None' },
+// [1]   { _tag: 'None' },
+// [1]   { _tag: 'Some', value: 'Gumball' }
+// [1] ]
+console.log('-----', pay(50)('Unpaid'))
 
 console.log('outputs', numGumballs)

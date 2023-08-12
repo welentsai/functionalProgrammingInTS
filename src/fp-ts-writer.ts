@@ -21,7 +21,7 @@ import * as A from 'fp-ts/Array'
 import * as f from 'fp-ts/function'
 
 // creating a Writer monad with an Array Monoid,
-// so that alle the logs of our workflow are concatenated into a string array
+// so that all the logs of our workflow are concatenated into a string array
 // The helper method “getChain” returns an actual Monad object with has a “chain” method
 const ArrayWriter = W.getChain<Array<string>>(A.getMonoid())
 
@@ -47,3 +47,11 @@ console.log(fractionThreeTimes(startValue)())
 // The nice thing with the Writer pattern is that
 // we do not need to explicitly handle the concatenation of the log values
 // and can concentrate on modifying the actual value of type A instead
+
+// [1]   1.25,
+// [1]   [
+// [1]     'Numerator: 10. Denominator: 2',
+// [1]     'Numerator: 5. Denominator: 2',
+// [1]     'Numerator: 2.5. Denominator: 2'
+// [1]   ]
+// [1] ]

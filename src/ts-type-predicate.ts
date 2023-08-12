@@ -23,6 +23,7 @@ const isDraftInvoice = (invoice: Invoice): invoice is DraftInvoice => {
 const selectedInvoice: Invoice = { __typename: 'FinalInvoice' }
 
 if (isFinalInvoice(selectedInvoice)) {
+  // const selectedInvoice: FinalInvoice
   console.log(`Final Invoice !`)
 } else {
   console.log(`Draft Invoice`)
