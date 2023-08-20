@@ -4,6 +4,8 @@
   "description": "",
   "main": "pipe_option.js",
   "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "build": "tsc -p tsconfig.json",
     "start:build": "tsc -w",
     "start:run": "nodemon ./dist/fp-ts-monoid.js",
@@ -31,6 +33,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
+    "@vitest/coverage-v8": "^0.34.2",
     "concurrently": "^7.4.0",
     "eslint": "^8.31.0",
     "io-ts-types": "^0.5.19",
@@ -38,7 +41,8 @@
     "nodemon": "^2.0.20",
     "prettier": "^2.8.2",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.2"
   },
   "dependencies": {
     "@types/url-parse": "^1.4.8",
