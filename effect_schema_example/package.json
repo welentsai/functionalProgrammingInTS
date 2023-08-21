@@ -1,0 +1,27 @@
+{
+  "name": "effect_schema",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "start": "npm run build:live",
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./index.ts",
+    "build": "tsc index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@effect/schema": "^0.33.1",
+    "@types/node": "^20.5.1",
+    "@vitest/coverage-v8": "^0.34.2",
+    "fp-ts": "^2.16.1",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "ts-pattern": "^5.0.5",
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.2"
+  }
+}

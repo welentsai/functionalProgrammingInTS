@@ -1,6 +1,6 @@
 import { describe, it, expect, assert } from 'vitest'
-import { NotFoundError } from '../../src/effect_schema/validationError'
 import * as E from 'fp-ts/Either'
+import { NotFoundError } from '../src/validationError'
 
 // The two tests marked with concurrent will be run in parallel
 describe('NotFoundError test suite', () => {
